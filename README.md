@@ -1,6 +1,6 @@
 # BudgeTeer
 
-<img src="https://raw.githubusercontent.com/rix1337/BudgeTeer/main/BudgeTeer/web_interface/vuejs_frontend/public/favicon.ico" data-canonical-src="https://raw.githubusercontent.com/rix1337/BudgeTeer/main/BudgeTeer/web_interface/vuejs_frontend/public/favicon.ico" width="64" height="64" />
+<img src="https://raw.githubusercontent.com/rix1337/BudgeTeer/main/budgeteer/web_interface/vuejs_frontend/public/favicon.ico" data-canonical-src="https://raw.githubusercontent.com/rix1337/BudgeTeer/main/budgeteer/web_interface/vuejs_frontend/public/favicon.ico" width="64" height="64" />
 
 Einfacher Überblick über das eigene Budget 
 
