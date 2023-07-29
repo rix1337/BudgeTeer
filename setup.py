@@ -23,7 +23,7 @@ setuptools.setup(
     version=get_version(),
     author="rix1337",
     author_email="",
-    description="Automate downloads using predefined sites and the My JDownloader API",
+    description="Einfacher Überblick über das eigene Budget",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/rix1337/BudgeTeer",
