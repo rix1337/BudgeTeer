@@ -1,0 +1,112 @@
+name: Release Artifacts
+
+on:
+  push:
+    paths-ignore:
+      - '.github/ISSUE_TEMPLATE/**'
+      - '.github/workflows/**'
+    branches:
+      - main
+
+jobs:
+  build_wheel:
+    name: Build Linux wheel
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('setup.py') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install Python dependencies
+        run: |
+          pip install wheel
+          pip install pyinstaller
+          pip install -r requirements.txt
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: Install Node dependencies
+        run: npm ci
+        working-directory: budgeteer/web_interface/vuejs_frontend
+      - run: npm run build
+        working-directory: budgeteer/web_interface/vuejs_frontend
+      - name: Compile Linux wheel
+        run: |
+          python setup.py sdist bdist_wheel
+      - name: Upload Linux wheel
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact-wheel
+          path: ./dist/*
+
+  build_exe:
+    name: Build Windows Exe
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - uses: actions/cache@v3
+        with:
+          path: ~\AppData\Local\pip\Cache
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('setup.py') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install Python dependencies
+        run: |
+          pip install wheel
+          pip install pyinstaller
+          pip install -r requirements.txt
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 16.x
+      - name: Install Node dependencies
+        run: npm ci
+        working-directory: budgeteer/web_interface/vuejs_frontend
+      - run: npm run build
+        working-directory: budgeteer/web_interface/vuejs_frontend
+      - name: Compile Windows Exe
+        run: |
+          $version = python budgeteer/providers/version.py
+          pyinstaller --onefile -y -i "budgeteer/web_interface/vuejs_frontend/public/favicon.ico" --noconsole --version-file "file_version_info.txt" --add-data "budgeteer/web_interface/vuejs_frontend;web_interface/vuejs_frontend" "BudgeTeer.py" -n "budgeteer-$version-standalone-win64"
+      - name: Upload Windows Exe
+        uses: actions/upload-artifact@v3
+        with:
+          name: artifact-exe
+          path: ./dist/*.exe
+
+  release:
+    name: Release Artifacts
+    runs-on: ubuntu-latest
+    needs: [ build_wheel, build_exe ]
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
+      - uses: actions/cache@v3
+        with:
+          path: ~/.cache/pip
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}-${{ hashFiles('setup.py') }}
+          restore-keys: |
+            ${{ runner.os }}-pip-
+      - name: Install requirements
+        run: |
+          pip install twine
+      - name: Get Version
+        run: echo "version=$(python budgeteer/providers/version.py)" >>$GITHUB_OUTPUT
+        id: version
+      - name: Create Release
+        uses: ncipollo/release-action@v1
+        with:
+          artifacts: "./artifact-wheel/*.whl,./artifact-exe/*.exe"
+          artifactErrorsFailBuild: true
+          bodyFile: ".github/Changelog.md"
+          tag: v.${{ steps.version.outputs.version }}
+      - name: Upload to PyPI
+        run: |
+          python -m twine upload ./artifact-wheel/* -u __token__ -p ${{ secrets.PYPI_TOKEN }}
