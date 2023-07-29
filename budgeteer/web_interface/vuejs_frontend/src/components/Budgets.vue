@@ -17,7 +17,7 @@ function prettifyAmount(amount) {
 function calculateCategoryTotal(i) {
   let total = 0
   for (let j = 0; j < store.state.data.budgets[i].entries.length; j++) {
-    if ((!displayMonthIsCurrentMonth || !store.state.data.budgets[i].entries[j].booked) || !displayMonthIsCurrentMonth()) {
+    if (showEntry(store.state.data.budgets[i].entries[j])) {
       let amount = parseFloat(store.state.data.budgets[i].entries[j].amount)
       if (!isNaN(amount)) {
         total += amount
@@ -46,7 +46,7 @@ function showEntry(entry) {
   if (store.state.locked && displayMonthIsCurrentMonth()) {
     return !entry.booked && checkEntryInDisplayMonth(entry)
   } else {
-    return true
+    return checkEntryInDisplayMonth(entry)
   }
 }
 
