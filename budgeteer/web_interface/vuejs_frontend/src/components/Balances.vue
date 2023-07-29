@@ -1,23 +1,9 @@
 <script setup>
 import {useStore} from 'vuex'
-import {useToast} from "vue-toastification"
-import axios from 'axios'
 
 const store = useStore()
-const toast = useToast()
 
 store.commit('getBalances')
-
-function saveBalances(name) {
-  axios.post('api/json/' + name + '/', store.state.data.balances)
-      .then(function () {
-        console.log(name + ' gespeichert.')
-      }, function () {
-        store.commit("getSettings")
-        console.log('Konnte ' + name + ' nicht speichern!')
-        toast.error('Konnte ' + name + ' nicht speichern!')
-      })
-}
 </script>
 
 
@@ -90,12 +76,6 @@ function saveBalances(name) {
                     @click="store.state.data.balances.push({label:'',amount:''})"
                 >
                   Konto hinzufügen
-                </button>
-                <button
-                    class="btn btn-outline-success"
-                    type="button"
-                    @click="saveBalances('balances')">
-                  Speichern
                 </button>
               </div>
             </div>

@@ -1,23 +1,9 @@
 <script setup>
 import {useStore} from 'vuex'
-import {useToast} from 'vue-toastification'
-import axios from 'axios'
 
 const store = useStore()
-const toast = useToast()
 
 store.commit('getOpenTransactions')
-
-function saveOpenTransactions(name) {
-  axios.post('api/json/' + name + '/', store.state.data.open_transactions)
-      .then(function () {
-        console.log(name + ' gespeichert.')
-      }, function () {
-        store.commit("getSettings")
-        console.log('Konnte ' + name + ' nicht speichern!')
-        toast.error('Konnte ' + name + ' nicht speichern!')
-      })
-}
 </script>
 
 
@@ -78,12 +64,6 @@ function saveOpenTransactions(name) {
                     @click="store.state.data.open_transactions.push({label:'',amount:''})"
                 >
                   Transaktion hinzufügen
-                </button>
-                <button
-                    class="btn btn-outline-success"
-                    type="button"
-                    @click="saveOpenTransactions('open_transactions')">
-                  Speichern
                 </button>
               </div>
             </div>

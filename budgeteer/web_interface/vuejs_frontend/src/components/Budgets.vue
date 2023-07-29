@@ -3,25 +3,12 @@ import {useStore} from 'vuex'
 import {ref} from 'vue'
 import DatePicker from 'vue-datepicker-next'
 import 'vue-datepicker-next/index.css'
-import {useToast} from "vue-toastification"
-import axios from 'axios'
 
 const store = useStore()
-const toast = useToast()
 
 
 store.commit('getBudgets')
 
-function saveBudgets(name) {
-  axios.post('api/json/' + name + '/', store.state.data.budgets)
-      .then(function () {
-        console.log(name + ' gespeichert.')
-      }, function () {
-        store.commit("getSettings")
-        console.log('Konnte ' + name + ' nicht speichern!')
-        toast.error('Konnte ' + name + ' nicht speichern!')
-      })
-}
 
 function prettifyAmount(amount) {
   return parseFloat(amount).toFixed(2)
@@ -77,7 +64,6 @@ function checkEntryInDisplayMonth(entry) {
 
   return current_month >= valid_from && current_month <= valid_to
 }
-
 </script>
 
 <template>
@@ -206,12 +192,6 @@ function checkEntryInDisplayMonth(entry) {
                         @click="store.state.data.budgets.push({category:'ToDo',amount:'', entries: []})"
                 >
                   Kategorie hinzufügen
-                </button>
-                <button
-                    class="btn btn-outline-success"
-                    type="button"
-                    @click="saveBudgets('budgets')">
-                  Speichern
                 </button>
               </div>
             </div>
