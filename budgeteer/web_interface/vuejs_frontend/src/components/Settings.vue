@@ -52,67 +52,53 @@ function submitSettings() {
                    type="form"
                    @submit="saveSettings()"
           >
-            <div class="accordion-item">
-              <h2 id="headingGeneral" class="accordion-header">
-                <button aria-controls="collapseGeneral" aria-expanded="false" class="accordion-button collapsed"
-                        data-bs-target="#collapseGeneral"
-                        data-bs-toggle="collapse" type="button">
-                  Allgemein
-                </button>
-              </h2>
-              <div id="collapseGeneral" aria-labelledby="headingGeneral" class="accordion-collapse collapse"
-                   data-bs-parent="#accordionSettings">
-                <div class="accordion-body">
-                  <div v-if="!store.state.misc.docker">
-                    <FormKit v-model="store.state.settings.general.port"
-                             help="Hier den Port des Webservers wählen."
-                             help-class="text-muted"
-                             input-class="form-control bg-light mb-2"
-                             label="Port"
-                             messages-class="text-danger"
-                             outer-class="mb-4"
-                             placeholder="Bspw. 9090"
-                             type="number"
-                             validation="required|between:1024,65535"
-                             validation-visibility="live"/>
-                  </div>
-                  <FormKit v-model="store.state.settings.general.prefix"
-                           help="Hier den Prefix des Webservers wählen (nützlich für Reverse-Proxies)."
-                           help-class="text-muted"
-                           input-class="form-control bg-light mb-2"
-                           label="Prefix"
-                           messages-class="text-danger"
-                           outer-class="mb-4"
-                           placeholder="Bspw. feedcrawler"
-                           type="text"
-                           validation="alpha"
-                           validation-visibility="live"/>
-                  <FormKit v-model="store.state.settings.general.auth_user"
-                           :validation="value.auth_hash ? 'required' : ''"
-                           help="Hier den Nutzernamen für BudgeTeer eingeben."
-                           help-class="text-muted"
-                           input-class="form-control bg-light mb-2"
-                           label="Nutzername"
-                           messages-class="text-danger"
-                           name="auth_user"
-                           outer-class="mb-4"
-                           placeholder="Bspw. rix1337"
-                           type="text"/>
-                  <FormKit v-model="store.state.settings.general.auth_hash"
-                           :validation="(password_changed && value.auth_user) ? 'required|length:6' : ''"
-                           help="Hier das Passwort für BudgeTeer angeben."
-                           help-class="text-muted"
-                           input-class="form-control bg-light mb-2"
-                           label="Passwort"
-                           messages-class="text-danger"
-                           name="auth_hash"
-                           outer-class="mb-4"
-                           placeholder="Bspw. ●●●●●●●●"
-                           type="password"
-                           validation-visibility="live"/>
-                </div>
-              </div>
+            <div v-if="!store.state.misc.docker">
+              <FormKit v-model="store.state.settings.general.port"
+                       help="Hier den Port des Webservers wählen."
+                       help-class="text-muted"
+                       input-class="form-control bg-light mb-2"
+                       label="Port"
+                       messages-class="text-danger"
+                       outer-class="mb-4"
+                       placeholder="Bspw. 9090"
+                       type="number"
+                       validation="required|between:1024,65535"
+                       validation-visibility="live"/>
             </div>
+            <FormKit v-model="store.state.settings.general.prefix"
+                     help="Hier den Prefix des Webservers wählen (nützlich für Reverse-Proxies)."
+                     help-class="text-muted"
+                     input-class="form-control bg-light mb-2"
+                     label="Prefix"
+                     messages-class="text-danger"
+                     outer-class="mb-4"
+                     placeholder="Bspw. feedcrawler"
+                     type="text"
+                     validation="alpha"
+                     validation-visibility="live"/>
+            <FormKit v-model="store.state.settings.general.auth_user"
+                     :validation="value.auth_hash ? 'required' : ''"
+                     help="Hier den Nutzernamen für BudgeTeer eingeben."
+                     help-class="text-muted"
+                     input-class="form-control bg-light mb-2"
+                     label="Nutzername"
+                     messages-class="text-danger"
+                     name="auth_user"
+                     outer-class="mb-4"
+                     placeholder="Bspw. rix1337"
+                     type="text"/>
+            <FormKit v-model="store.state.settings.general.auth_hash"
+                     :validation="(password_changed && value.auth_user) ? 'required|length:6' : ''"
+                     help="Hier das Passwort für BudgeTeer angeben."
+                     help-class="text-muted"
+                     input-class="form-control bg-light mb-2"
+                     label="Passwort"
+                     messages-class="text-danger"
+                     name="auth_hash"
+                     outer-class="mb-4"
+                     placeholder="Bspw. ●●●●●●●●"
+                     type="password"
+                     validation-visibility="live"/>
           </FormKit>
         </div>
         <div>

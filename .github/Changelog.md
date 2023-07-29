@@ -8,6 +8,7 @@
 - Save balances, budgets and open transactions on lock
 - Check budget entry for validity
 - Move balances to header
+- Simplified Settings
 - ToDo:
     - Fix Date picker for budget validity
     - Check budget validity calculating remaining budget for the current month in the header
