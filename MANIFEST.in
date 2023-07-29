@@ -1,0 +1,1 @@
+recursive-include budgeteer/web_interface/vuejs_frontend/dist *

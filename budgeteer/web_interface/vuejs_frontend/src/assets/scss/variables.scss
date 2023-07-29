@@ -1,0 +1,136 @@
+// Set Vue-Toastification variables to bootstrap SCSS variables
+@import "../node_modules/bootstrap/scss/functions";
+@import "../node_modules/bootstrap/scss/variables";
+
+$vt-color-default: $primary !default;
+$vt-text-color-default: #fff !default;
+$vt-color-info: $primary !default;
+$vt-text-color-info: #fff !default;
+$vt-color-success: $success !default;
+$vt-text-color-success: #fff !default;
+$vt-color-warning: $warning !default;
+$vt-text-color-warning: #fff !default;
+$vt-color-error: $danger !default;
+$vt-text-color-error: #fff !default;
+$vt-font-family: $font-family-sans-serif !default;
+$vt-toast-max-width: 1200px !default;
+
+// Vue Toastification imports for variables.scss
+@import "vue-toastification/src/scss/_variables";
+@import "vue-toastification/src/scss/_toastContainer";
+@import "vue-toastification/src/scss/_toast";
+@import "vue-toastification/src/scss/_closeButton";
+@import "vue-toastification/src/scss/_progressBar";
+@import "vue-toastification/src/scss/_icon";
+@import "vue-toastification/src/scss/animations/_bounce";
+
+// Formkit Validation Styles
+[data-invalid] .formkit-inner {
+  border-color: $danger !important;
+  border-radius: .25rem;
+  box-shadow: 0 0 0 0.25rem $danger !important;
+}
+
+.dark {
+  .card, .offcanvas, .modal-content {
+    background-color: $dark;
+    color: $white;
+    border-color: $secondary;
+  }
+
+  .card-header {
+    border-bottom-color: $secondary;
+  }
+
+  .border-top {
+    border-top-color: $secondary !important;
+  }
+
+  .modal-header {
+    border-bottom-color: $secondary;
+  }
+
+  .modal-footer {
+    border-top-color: $secondary;
+  }
+
+  .table > :not(caption) > * > * {
+    background-color: $dark;
+    color: $white;
+  }
+
+  tbody, td, tfoot, th, thead, tr {
+    border-color: $secondary;
+  }
+
+  .table-hover tbody tr:hover td, .table-hover tbody tr:hover th {
+    background-color: $warning;
+  }
+
+  .list-group-item {
+    background-color: $dark;
+    color: $white;
+  }
+
+  .accordion-item {
+    color: $white;
+  }
+
+  .accordion {
+    background-color: black !important;
+    color: $white !important;
+    border-color: $secondary !important;
+    --bs-accordion-bg: $dark !important;
+  }
+
+  .accordion-button {
+    background-color: $gray-800 !important;
+    color: $warning !important;
+  }
+
+
+  .form-control {
+    border-color: $secondary;
+  }
+
+  .form-control.bg-light {
+    background-color: $dark !important;
+    color: $white;
+  }
+
+  ul.pagination li {
+    --bs-pagination-bg: $dark !important;
+    --bs-pagination-disabled-bg: $white !important;
+  }
+
+  svg {
+    -webkit-filter: invert(100%); /* safari 6.0 - 9.0 */
+    filter: invert(100%);
+  }
+
+  mark {
+    background-color: $secondary;
+    color: $white;
+  }
+
+  mark a {
+    color: $warning;
+  }
+
+  mark a {
+    color: $warning !important;
+  }
+
+  .percentage {
+    color: black;
+  }
+
+  .accordion-button.collapsed::after {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFC107FF'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e");
+  }
+
+  .btn-close {
+    background: transparent url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23FFC107FF'%3e%3cpath fill-rule='evenodd' d='M.293.293a1 1 0 011.414 0L8 6.586 14.293.293a1 1 0 111.414 1.414L9.414 8l6.293 6.293a1 1 0 01-1.414 1.414L8 9.414l-6.293 6.293a1 1 0 01-1.414-1.414L6.586 8 .293 1.707a1 1 0 010-1.414z'/%3e%3c/svg%3e") center/1em auto no-repeat;
+  }
+
+}

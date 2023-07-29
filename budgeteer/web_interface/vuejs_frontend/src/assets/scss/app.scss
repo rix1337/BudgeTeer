@@ -1,0 +1,48 @@
+// Fit Bootstrap Offcanvas size to content
+.offcanvas-bottom {
+  height: unset !important;
+  min-height: 60%;
+  max-height: 100%;
+}
+
+// Center Inputs
+input {
+  text-align: center;
+}
+
+// Set Vue-Tippy variables to bootstrap variables
+.tippy-box {
+  font-family: var(--bs-body-font-family) !important;
+  font-size: var(--bs-body-font-size) !important;
+  font-weight: var(--bs-body-font-weight) !important;
+  line-height: var(--bs-body-line-height) !important;
+  color: #fff !important;
+  background-color: #1c1f23 !important;
+  border-color: #1a1e21 !important;
+  max-width: 1200px !important;
+}
+
+// Set FormKit label to match BootStrap h5
+.formkit-label {
+  font-size: 1.25rem;
+  margin-top: 0;
+  margin-bottom: .5rem;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+/* Formkit Inputs */
+.formkit-inner {
+  max-width: 720px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+/* Formkit Help texts */
+.formkit-help {
+  max-width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}

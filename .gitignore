@@ -1,0 +1,39 @@
+# -*- coding: utf-8 -*-
+# BudgeTeer
+# Projekt von https://github.com/rix1337
+
+# Python
+*.pyc
+*.bak
+*.spec
+file_version_info.txt
+version.txt
+__pycache__
+
+# Build Tools
+build
+dist
+venv
+*.egg-info
+
+# BudgeTeer files
+*.conf
+*.db
+*.log
+*.crawljob
+*.ini
+*.journal
+*.zip
+*.1
+*.2
+*.3
+*.4
+*.5
+
+# PyCharm
+.idea
+.eggs
+
+# Vue
+budgeteer/web_interface/vuejs_frontend/node_modules
+budgeteer/web_interface/vuejs_frontend/dist
