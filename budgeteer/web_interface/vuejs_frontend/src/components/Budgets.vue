@@ -160,7 +160,7 @@ function checkEntryInDisplayMonth(entry) {
                                 class="btn btn-outline-success"
                                 type="button"
                                 @click="store.state.data.budgets[category_index].entries[entry_index].booked = true">
-                              <i class="bi bi-check2"/>
+                              <i class="bi bi-check"/>
                             </button>
                           </div>
                         </div>

@@ -6,7 +6,6 @@ import "bootstrap"
 import Head from './Head.vue'
 import Settings from './Settings.vue'
 import Transactions from "./Transactions.vue"
-import Balances from "./Balances.vue"
 import Budgets from "./Budgets.vue"
 </script>
 
@@ -15,7 +14,6 @@ import Budgets from "./Budgets.vue"
     <!--- Main Items -->
     <Head/>
     <Transactions/>
-    <Balances/>
     <Budgets/>
     <!-- Offcanvas Items -->
     <Settings/>

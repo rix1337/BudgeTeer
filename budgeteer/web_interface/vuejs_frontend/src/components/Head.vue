@@ -7,6 +7,8 @@ import axios from 'axios'
 const store = useStore()
 const toast = useToast()
 
+store.commit('getBalances')
+
 onMounted(() => {
   getVersion()
   setInterval(getVersion, 300 * 1000)
@@ -82,7 +84,7 @@ const current_budget = computed({
       }
     }
 
-    return (parseFloat(balances_total_amount + transactions_total_amount + current_budget_total_amount).toFixed(2))
+    return (balances_total_amount + transactions_total_amount + current_budget_total_amount).toFixed(2)
   }
 })
 
@@ -109,6 +111,67 @@ const current_month = ref(
           <div class="card-body">
             <div class="row justify-content-center mt-2">
               <h2>Restbudget {{ current_month }}: {{ current_budget }} €</h2>
+              <div class="row justify-content-center mt-2">
+                <div v-for="(item, index) in store.state.data.balances" :key="item" class="balance">
+                  <div class="input-group">
+                    <div class="input-group-prepend">
+                      <input :disabled="store.state.locked"
+                             v-model="store.state.data.balances[index].label"
+                             class="form-control">
+                    </div>
+                    <input :disabled="store.state.locked"
+                           v-model="store.state.data.balances[index].balance"
+                           type="number"
+                           step="0.01"
+                           class="form-control">
+                    <div class="input-group-append">
+                      <span class="input-group-text"> €</span>
+                    </div>
+                    <div v-if="!store.state.locked"
+                         class="input-group-append">
+                      <select :disabled="store.state.locked"
+                              v-model="store.state.data.balances[index].type"
+                              class="form-control">
+                        <option value="checking">Girokonto</option>
+                        <option value="savings">Sparkonto</option>
+                      </select>
+                    </div>
+                    <div v-if="!store.state.locked"
+                         class="input-group-append">
+                      <button
+                          class="btn btn-outline-primary"
+                          type="button"
+                          @click="store.state.data.balances.splice(index - 1, 0, store.state.data.balances.splice(index, 1)[0])"
+                      >
+                        <i class="bi bi-arrow-up"/>
+                      </button>
+                      <button
+                          class="btn btn-outline-primary"
+                          type="button"
+                          @click="store.state.data.balances.splice(index + 1, 0, store.state.data.balances.splice(index, 1)[0])"
+                      >
+                        <i class="bi bi-arrow-down"/>
+                      </button>
+                      <button
+                          class="btn btn-outline-danger"
+                          type="button"
+                          @click="store.state.data.balances.splice(index, 1)"
+                      >
+                        <i class="bi bi-trash3"/>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div v-if="!store.state.locked" class="row justify-content-center mt-2">
+                  <button
+                      class="btn btn-outline-primary"
+                      type="button"
+                      @click="store.state.data.balances.push({label:'',amount:''})"
+                  >
+                    Konto hinzufügen
+                  </button>
+                </div>
+              </div>
               <div class="col-md-auto p-1">
                 <button aria-controls="offcanvasBottomSettings" class="btn btn-outline-primary"
                         data-bs-target="#offcanvasBottomSettings"

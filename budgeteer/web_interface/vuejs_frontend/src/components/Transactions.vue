@@ -22,17 +22,19 @@ store.commit('getOpenTransactions')
               <div v-for="(item, index) in store.state.data.open_transactions" :key="item" class="transaction">
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <input v-model="store.state.data.open_transactions[index].label"
+                    <input :disabled="store.state.locked"
+                           v-model="store.state.data.open_transactions[index].label"
                            class="form-control">
                   </div>
-                  <input v-model="store.state.data.open_transactions[index].amount"
+                  <input :disabled="store.state.locked"
+                         v-model="store.state.data.open_transactions[index].amount"
                          type="number"
                          step="0.01"
                          class="form-control">
                   <div class="input-group-append">
                     <span class="input-group-text"> €</span>
                   </div>
-                  <div class="input-group-append">
+                  <div v-if="!store.state.locked" class="input-group-append">
                     <button
                         class="btn btn-outline-primary"
                         type="button"
@@ -47,12 +49,14 @@ store.commit('getOpenTransactions')
                     >
                       <i class="bi bi-arrow-down"/>
                     </button>
+                  </div>
+                  <div class="input-group-append">
                     <button
-                        class="btn btn-outline-danger"
+                        class="btn btn-outline-success"
                         type="button"
                         @click="store.state.data.open_transactions.splice(index, 1)"
                     >
-                      <i class="bi bi-trash3"/>
+                      <i class="bi bi-check"/>
                     </button>
                   </div>
                 </div>
