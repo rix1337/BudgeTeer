@@ -8,8 +8,8 @@ const store = useStore()
 const toast = useToast()
 
 onMounted(() => {
-  //getVersion()
-  //setInterval(getVersion, 300 * 1000)
+  getVersion()
+  setInterval(getVersion, 300 * 1000)
 })
 
 function openReleaseNotes() {

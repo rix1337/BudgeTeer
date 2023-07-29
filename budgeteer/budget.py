@@ -30,6 +30,7 @@ def start_budgeteer():
         parser.add_argument("--log-level", help="Legt fest, wie genau geloggt wird (INFO, DEBUG)")
         parser.add_argument("--config", help="Legt den Ablageort für Einstellungen und Logs fest")
         parser.add_argument("--port", help="Legt den Port des Webservers fest")
+        parser.add_argument("--test_run", action='store_true', help="Intern: Führt einen Testlauf durch")
         parser.add_argument("--docker", action='store_true',
                             help="Intern: Sperre Pfad und Port auf Docker-Standardwerte")
         arguments = parser.parse_args()
@@ -80,8 +81,13 @@ def start_budgeteer():
         BudgetConfig("BudgeTeer").remove_redundant_entries()
         remove_redundant_db_tables(shared_state.values["dbfile"])
 
-        process_web_server = multiprocessing.Process(target=web_server, args=(shared_state_dict, shared_state_lock,))
-        process_web_server.start()
+        if not arguments.test_run:
+            process_web_server = multiprocessing.Process(target=web_server,
+                                                         args=(shared_state_dict, shared_state_lock,))
+            process_web_server.start()
+        else:
+            print("Testlauf aktiviert, Webserver wird nicht gestartet")
+            sys.exit(0)
 
         def signal_handler(sig, frame):
             process_web_server.terminate()
