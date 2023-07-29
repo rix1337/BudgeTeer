@@ -9,6 +9,7 @@
 - Check budget entry for validity
 - Move balances to header
 - Simplified Settings
+- Moved settings to floating action button
 - ToDo:
     - Fix Date picker for budget validity
     - Check budget validity calculating remaining budget for the current month in the header

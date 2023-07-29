@@ -50,10 +50,6 @@ function scrollingTitle(titleText) {
   }, 200)
 }
 
-function getSettings() {
-  store.commit("getSettings")
-}
-
 const current_budget = computed({
   // getter
   get() {
@@ -171,14 +167,6 @@ const current_month = ref(
                     Konto hinzufügen
                   </button>
                 </div>
-              </div>
-              <div class="col-md-auto p-1">
-                <button aria-controls="offcanvasBottomSettings" class="btn btn-outline-primary"
-                        data-bs-target="#offcanvasBottomSettings"
-                        data-bs-toggle="offcanvas"
-                        type="button"
-                        @click='getSettings'><i class="bi bi-gear"/> Einstellungen
-                </button>
               </div>
             </div>
           </div>
