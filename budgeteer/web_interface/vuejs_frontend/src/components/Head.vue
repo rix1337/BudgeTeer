@@ -73,8 +73,6 @@ const current_budget = computed({
     for (let i = 0; i < store.state.data.budgets.length; i++) {
       for (let j = 0; j < store.state.data.budgets[i].entries.length; j++) {
         let amount = parseFloat(store.state.data.budgets[i].entries[j].amount)
-        // TODO: check if valid_from_to is in current month
-        console.log(checkEntryInDisplayMonthAndNotBooked(store.state.data.budgets[i].entries[j]))
         if (!isNaN(amount) && checkEntryInDisplayMonthAndNotBooked(store.state.data.budgets[i].entries[j])) {
           current_budget_total_amount += amount
         }
