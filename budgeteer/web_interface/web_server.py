@@ -224,28 +224,10 @@ def app_container():
     @auth_basic(is_authenticated_user)
     def get_json(name):
         try:
-            # balances = {
-            #     "balances": [
-            #         {
-            #             "label": 'Girokonto',
-            #             "balance": prettify_amount("888.2"),
-            #             "type": 'checking'
-            #         },
-            #         {
-            #             "label": 'Urlaub',
-            #             "balance": prettify_amount("9999.99"),
-            #             "type": 'savings'
-            #         },
-            #         {
-            #             "label": 'Notfall', "balance": prettify_amount("1000"),
-            #             "type": 'savings'
-            #         }
-            #     ]
-            # }
             try:
                 data = json.loads(BudgetDB("json").retrieve(name))
             except:
-                data = {}
+                data = []
             return {
                 name: data
             }

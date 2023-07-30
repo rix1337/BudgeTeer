@@ -62,7 +62,7 @@ store.commit('getOpenTransactions')
                 </div>
               </div>
               <div class="row justify-content-center mt-2">
-                <button
+                <button v-if="!store.state.locked"
                     class="btn btn-outline-primary"
                     type="button"
                     @click="store.state.data.open_transactions.push({label:'',amount:''})"

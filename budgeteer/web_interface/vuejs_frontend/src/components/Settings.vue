@@ -72,7 +72,7 @@ function submitSettings() {
                      label="Prefix"
                      messages-class="text-danger"
                      outer-class="mb-4"
-                     placeholder="Bspw. feedcrawler"
+                     placeholder="Bspw. budgeteer"
                      type="text"
                      validation="alpha"
                      validation-visibility="live"/>
