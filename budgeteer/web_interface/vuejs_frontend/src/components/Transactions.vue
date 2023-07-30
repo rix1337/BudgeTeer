@@ -1,23 +1,9 @@
 <script setup>
 import {useStore} from 'vuex'
-import {useToast} from 'vue-toastification'
-import axios from 'axios'
 
 const store = useStore()
-const toast = useToast()
 
 store.commit('getOpenTransactions')
-
-function saveOpenTransactions(name) {
-  axios.post('api/json/' + name + '/', store.state.data.open_transactions)
-      .then(function () {
-        console.log(name + ' gespeichert.')
-      }, function () {
-        store.commit("getSettings")
-        console.log('Konnte ' + name + ' nicht speichern!')
-        toast.error('Konnte ' + name + ' nicht speichern!')
-      })
-}
 </script>
 
 
@@ -36,17 +22,19 @@ function saveOpenTransactions(name) {
               <div v-for="(item, index) in store.state.data.open_transactions" :key="item" class="transaction">
                 <div class="input-group">
                   <div class="input-group-prepend">
-                    <input v-model="store.state.data.open_transactions[index].label"
+                    <input :disabled="store.state.locked"
+                           v-model="store.state.data.open_transactions[index].label"
                            class="form-control">
                   </div>
-                  <input v-model="store.state.data.open_transactions[index].amount"
+                  <input :disabled="store.state.locked"
+                         v-model="store.state.data.open_transactions[index].amount"
                          type="number"
                          step="0.01"
                          class="form-control">
                   <div class="input-group-append">
                     <span class="input-group-text"> €</span>
                   </div>
-                  <div class="input-group-append">
+                  <div v-if="!store.state.locked" class="input-group-append">
                     <button
                         class="btn btn-outline-primary"
                         type="button"
@@ -61,10 +49,12 @@ function saveOpenTransactions(name) {
                     >
                       <i class="bi bi-arrow-down"/>
                     </button>
+                  </div>
+                  <div class="input-group-append">
                     <button
                         class="btn btn-outline-danger"
                         type="button"
-                        @click="store.state.data.open_transactions.splice(index, 1)"
+                        @click="store.state.data.open_transactions.splice(index, 1) && store.commit('setModifiedWhileLocked', true)"
                     >
                       <i class="bi bi-trash3"/>
                     </button>
@@ -78,12 +68,6 @@ function saveOpenTransactions(name) {
                     @click="store.state.data.open_transactions.push({label:'',amount:''})"
                 >
                   Transaktion hinzufügen
-                </button>
-                <button
-                    class="btn btn-outline-success"
-                    type="button"
-                    @click="saveOpenTransactions('open_transactions')">
-                  Speichern
                 </button>
               </div>
             </div>

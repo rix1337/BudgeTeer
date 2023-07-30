@@ -23,6 +23,7 @@ const store = createStore({
                 budgets: []
             },
             locked: true,
+            modified_while_locked: false,
             settings: {},
             misc: {
                 loaded_settings: false,
@@ -68,6 +69,8 @@ const store = createStore({
             state.misc.docker = docker
         }, setLocked(state, locked) {
             state.locked = locked
+        }, setModifiedWhileLocked(state, locked) {
+            state.modified_while_locked = locked
         }
     }
 })

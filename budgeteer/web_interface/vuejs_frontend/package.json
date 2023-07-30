@@ -1,6 +1,6 @@
 {
   "name": "budgeteer-web",
-  "version": "0.0.2",
+  "version": "0.1.0",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
@@ -15,11 +15,9 @@
     "bootstrap-icons": "^1.10.5",
     "sass": "^1.63.6",
     "vue": "^3.3.4",
-    "vue-datepicker-next": "^1.0.3",
     "vue-router": "^4.2.4",
     "vue-tippy": "^6.2.0",
     "vue-toastification": "^2.0.0-rc.5",
-    "vuejs-paginate-next": "^1.0.2",
     "vuex": "^4.1.0"
   },
   "devDependencies": {

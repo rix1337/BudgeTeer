@@ -1,27 +1,13 @@
 <script setup>
 import {useStore} from 'vuex'
 import {ref} from 'vue'
-import DatePicker from 'vue-datepicker-next'
-import 'vue-datepicker-next/index.css'
-import {useToast} from "vue-toastification"
-import axios from 'axios'
+import DatePicker from './DatePicker.vue'
 
 const store = useStore()
-const toast = useToast()
 
 
 store.commit('getBudgets')
 
-function saveBudgets(name) {
-  axios.post('api/json/' + name + '/', store.state.data.budgets)
-      .then(function () {
-        console.log(name + ' gespeichert.')
-      }, function () {
-        store.commit("getSettings")
-        console.log('Konnte ' + name + ' nicht speichern!')
-        toast.error('Konnte ' + name + ' nicht speichern!')
-      })
-}
 
 function prettifyAmount(amount) {
   return parseFloat(amount).toFixed(2)
@@ -30,7 +16,7 @@ function prettifyAmount(amount) {
 function calculateCategoryTotal(i) {
   let total = 0
   for (let j = 0; j < store.state.data.budgets[i].entries.length; j++) {
-    if ((!displayMonthIsCurrentMonth || !store.state.data.budgets[i].entries[j].booked) || !displayMonthIsCurrentMonth()) {
+    if (showEntry(store.state.data.budgets[i].entries[j])) {
       let amount = parseFloat(store.state.data.budgets[i].entries[j].amount)
       if (!isNaN(amount)) {
         total += amount
@@ -59,7 +45,7 @@ function showEntry(entry) {
   if (store.state.locked && displayMonthIsCurrentMonth()) {
     return !entry.booked && checkEntryInDisplayMonth(entry)
   } else {
-    return true
+    return entry
   }
 }
 
@@ -77,7 +63,6 @@ function checkEntryInDisplayMonth(entry) {
 
   return current_month >= valid_from && current_month <= valid_to
 }
-
 </script>
 
 <template>
@@ -87,11 +72,9 @@ function checkEntryInDisplayMonth(entry) {
         <div class="card text-center shadow my-3">
           <div class="card-header">
             <h1>
-              <i class="bi bi-currency-euro"/> Budgets {{ display_month }}
-            </h1>
-            <div class="col-md-auto p-1">
+              <i class="bi bi-receipt-cutoff"/> Budgets {{ display_month }}
               <button :disabled="display_month_index <= 0"
-                      class="btn btn-outline-primary"
+                      class="btn btn-outline-primary m-1"
                       type="button"
                       @click="updateDisplayMonth(-1)">
                 <i class="bi bi-arrow-left"/>
@@ -102,6 +85,9 @@ function checkEntryInDisplayMonth(entry) {
                       @click="updateDisplayMonth(1)">
                 <i class="bi bi-arrow-right"/>
               </button>
+            </h1>
+            <div class="col-md-auto p-1">
+
             </div>
           </div>
           <div class="card-body">
@@ -167,25 +153,22 @@ function checkEntryInDisplayMonth(entry) {
                             >
                               <i class="bi bi-trash3"/>
                             </button>
+                            <DatePicker title="von"
+                                        v-model="store.state.data.budgets[category_index].entries[entry_index].valid_from_to[0]">
+                            </DatePicker>
+                            <DatePicker title="bis"
+                                        v-model="store.state.data.budgets[category_index].entries[entry_index].valid_from_to[1]">
+                            </DatePicker>
                           </div>
                           <div class="input-group-append">
                             <button
                                 v-if="displayMonthIsCurrentMonth() && store.state.locked && !store.state.data.budgets[category_index].entries[entry_index].booked"
                                 class="btn btn-outline-success"
                                 type="button"
-                                @click="store.state.data.budgets[category_index].entries[entry_index].booked = true">
-                              <i class="bi bi-check2"/>
+                                @click="store.commit('setModifiedWhileLocked', true); store.state.data.budgets[category_index].entries[entry_index].booked = true">
+                              <i class="bi bi-check"/>
                             </button>
                           </div>
-                        </div>
-                        <div v-if="!store.state.locked">
-                          Aktiv: {{ store.state.data.budgets[category_index].entries[entry_index].valid_from_to }}
-                          <!-- ToDo date-picker broken. It currently cant work with Input YYYY-MM Dates-->
-                          <date-picker
-                              v-model:value="store.state.data.budgets[category_index].entries[entry_index].valid_from_to"
-                              type="month"
-                              format="MMMM YYYY"
-                              range="true"/>
                         </div>
                       </div>
                       <button v-if="!store.state.locked"
@@ -196,7 +179,6 @@ function checkEntryInDisplayMonth(entry) {
                       </button>
                     </div>
                   </div>
-
                 </div>
               </div>
               <div class="row justify-content-center mt-2">
@@ -206,12 +188,6 @@ function checkEntryInDisplayMonth(entry) {
                         @click="store.state.data.budgets.push({category:'ToDo',amount:'', entries: []})"
                 >
                   Kategorie hinzufügen
-                </button>
-                <button
-                    class="btn btn-outline-success"
-                    type="button"
-                    @click="saveBudgets('budgets')">
-                  Speichern
                 </button>
               </div>
             </div>
