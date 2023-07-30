@@ -7,13 +7,8 @@
 ### Changelog BudgeTeer:
 
 #### v.0.1.0
-- Save balances, budgets and open transactions on lock
-- Check budget entry for validity
-- Move balances to header
-- Simplified Settings
-- Moved settings to floating action button
-- Implemented Datepicker (for Budget validity by month)
-- Show save button on deletion of budgets and open transactions
-- ToDo:
-    - Check budget validity calculating remaining budget for the current month in the header
-
+- Kontostände, Budgets und offene Transaktionen werden beim Sperren automatisch gespeichert
+- Budgeteintrag auf Gültigkeitszeitraum prüfen
+- Datepicker implementiert (für Gültigkeitszeitraum der Budgets)
+- Kontostände in die Kopfzeile verschoben
+- Schaltfläche "Speichern" beim Löschen von Budgets und offenen Transaktionen anzeigen

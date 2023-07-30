@@ -165,7 +165,7 @@ function checkEntryInDisplayMonth(entry) {
                                 v-if="displayMonthIsCurrentMonth() && store.state.locked && !store.state.data.budgets[category_index].entries[entry_index].booked"
                                 class="btn btn-outline-success"
                                 type="button"
-                                @click="store.state.data.budgets[category_index].entries[entry_index].booked = true; store.commit('setModifiedWhileLocked', true)">
+                                @click="store.commit('setModifiedWhileLocked', true); store.state.data.budgets[category_index].entries[entry_index].booked = true">
                               <i class="bi bi-check"/>
                             </button>
                           </div>

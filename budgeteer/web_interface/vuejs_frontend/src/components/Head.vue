@@ -74,7 +74,8 @@ const current_budget = computed({
       for (let j = 0; j < store.state.data.budgets[i].entries.length; j++) {
         let amount = parseFloat(store.state.data.budgets[i].entries[j].amount)
         // TODO: check if valid_from_to is in current month
-        if (!isNaN(amount) && !store.state.data.budgets[i].entries[j].booked) {
+        console.log(checkEntryInDisplayMonthAndNotBooked(store.state.data.budgets[i].entries[j]))
+        if (!isNaN(amount) && checkEntryInDisplayMonthAndNotBooked(store.state.data.budgets[i].entries[j])) {
           current_budget_total_amount += amount
         }
       }
@@ -83,6 +84,24 @@ const current_budget = computed({
     return (balances_total_amount + transactions_total_amount + current_budget_total_amount).toFixed(2)
   }
 })
+
+function checkEntryInDisplayMonthAndNotBooked(entry) {
+  if (!entry.booked) {
+    let current_month = new Date()
+    let valid_from = new Date("1970-01-01")
+    let valid_to = new Date("2100-01-01")
+
+    if (entry.valid_from_to[0] !== null) {
+      valid_from = new Date(entry.valid_from_to[0])
+    }
+    if (entry.valid_from_to[1] !== null) {
+      valid_to = new Date(entry.valid_from_to[1])
+    }
+
+    return current_month >= valid_from && current_month <= valid_to
+  }
+  return false
+}
 
 const current_month = ref(
     new Date().toLocaleString('default', {month: 'long'})
@@ -96,7 +115,7 @@ const current_month = ref(
       <div class="col-md-10 offset-md-1">
         <div class="card text-center shadow my-3">
           <div class="card-header">
-              <h1><i class="bi-cash-coin"/> Verfügbar im {{ current_month }}: {{ current_budget }} €</h1>
+            <h1><i class="bi-cash-coin"/> Verfügbar im {{ current_month }}: {{ current_budget }} €</h1>
           </div>
           <div class="card-body">
             <div class="row justify-content-center mt-2">
