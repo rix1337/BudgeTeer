@@ -7,9 +7,15 @@
 ### Changelog BudgeTeer:
 
 #### v.0.1.2
+- Fehlerbehebung bei Aktivierung von Basic Auth
+- Die Gültigkeit von künftigen Budgets wird bei deren Berechnung beachtet
 - ToDo
-  - Book budgets per month (NOT GLOBALLY)
-  - Add Weekly/Yearly budget types
+  - Mark budgets booked per month (NOT GLOBALLY)
+  - Add Yearly budget type (select month only for validity)
+  - Add Weekly budget type
+    - calculate weeks of month automatically
+    - instead of done check do done +/- counter button
+  - Allow displaying future remaining budget in head
 
 #### v.0.1.1
 - Fehlerkorrektur beim Hinzufügen neuer Konten, Transaktionen und Budgets
