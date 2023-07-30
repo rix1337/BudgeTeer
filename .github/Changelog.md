@@ -6,6 +6,11 @@
 
 ### Changelog BudgeTeer:
 
+#### v.0.1.2
+- ToDo
+  - Book budgets per month (NOT GLOBALLY)
+  - Add Weekly/Yearly budget types
+
 #### v.0.1.1
 - Fehlerkorrektur beim Hinzufügen neuer Konten, Transaktionen und Budgets
 - Budgets können umbenannt und gelöscht werden

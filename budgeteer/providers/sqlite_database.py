@@ -19,7 +19,8 @@ def remove_redundant_db_tables(file):
 
     keep_tables = [
         'BudgeTeer',
-        'json'
+        'json',
+        'secrets'
     ]
 
     cursor.execute("SELECT name FROM sqlite_master WHERE type='table'")
