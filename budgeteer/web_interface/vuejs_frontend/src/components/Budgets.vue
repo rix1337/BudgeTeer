@@ -95,12 +95,27 @@ function checkEntryInDisplayMonth(entry) {
               <div class="accordion" id="accordionBudgets">
                 <div v-for="(budget, category_index) in store.state.data.budgets" :key="budget" class="accordion-item">
                   <h2 class="accordion-header" :id="'heading' + category_index">
-                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                    <button v-if="store.state.locked"
+                            class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                             :data-bs-target="'#collapse' + category_index" aria-expanded="false"
                             :aria-controls="'collapse' + category_index">
                       {{ store.state.data.budgets[category_index].category }}: {{
                         calculateCategoryTotal(category_index)
                       }} €
+                    </button>
+                    <button v-else
+                            class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                            :data-bs-target="'#collapse' + category_index" aria-expanded="false"
+                            :aria-controls="'collapse' + category_index">
+                      <input type="text" class="form-control" placeholder="Kategorie"
+                             v-model="store.state.data.budgets[category_index].category">
+                      <button
+                          class="btn btn-outline-danger"
+                          type="button"
+                          @click="store.state.data.budgets.splice(category_index, 1) && store.commit('setModifiedWhileLocked', true)"
+                      >
+                        <i class="bi bi-trash3"/>
+                      </button>
                     </button>
                   </h2>
                   <div :id="'collapse' + category_index" class="accordion-collapse collapse"
@@ -185,7 +200,7 @@ function checkEntryInDisplayMonth(entry) {
                 <button v-if="!store.state.locked"
                         class="btn btn-outline-primary"
                         type="button"
-                        @click="store.state.data.budgets.push({category:'ToDo',amount:'', entries: []})"
+                        @click="store.state.data.budgets.push({category:'Kategorie',amount:'', entries: []})"
                 >
                   Kategorie hinzufügen
                 </button>

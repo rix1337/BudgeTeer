@@ -6,6 +6,10 @@
 
 ### Changelog BudgeTeer:
 
+#### v.0.1.1
+- Fehlerkorrektur beim Hinzufügen neuer Konten, Transaktionen und Budgets
+- Budgets können umbenannt und gelöscht werden
+
 #### v.0.1.0
 - Kontostände, Budgets und offene Transaktionen werden beim Sperren automatisch gespeichert
 - Budgeteintrag auf Gültigkeitszeitraum prüfen
