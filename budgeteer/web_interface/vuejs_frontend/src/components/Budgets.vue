@@ -1,8 +1,7 @@
 <script setup>
 import {useStore} from 'vuex'
 import {ref} from 'vue'
-import DatePicker from 'vue-datepicker-next'
-import 'vue-datepicker-next/index.css'
+import DatePicker from './DatePicker.vue'
 
 const store = useStore()
 
@@ -46,7 +45,7 @@ function showEntry(entry) {
   if (store.state.locked && displayMonthIsCurrentMonth()) {
     return !entry.booked && checkEntryInDisplayMonth(entry)
   } else {
-    return checkEntryInDisplayMonth(entry)
+    return entry
   }
 }
 
@@ -153,6 +152,12 @@ function checkEntryInDisplayMonth(entry) {
                             >
                               <i class="bi bi-trash3"/>
                             </button>
+                            <DatePicker title="von"
+                                        v-model="store.state.data.budgets[category_index].entries[entry_index].valid_from_to[0]">
+                            </DatePicker>
+                            <DatePicker title="bis"
+                                        v-model="store.state.data.budgets[category_index].entries[entry_index].valid_from_to[1]">
+                            </DatePicker>
                           </div>
                           <div class="input-group-append">
                             <button
@@ -163,15 +168,6 @@ function checkEntryInDisplayMonth(entry) {
                               <i class="bi bi-check"/>
                             </button>
                           </div>
-                        </div>
-                        <div v-if="!store.state.locked">
-                          Aktiv: {{ store.state.data.budgets[category_index].entries[entry_index].valid_from_to }}
-                          <!-- ToDo date-picker broken. It currently cant work with Input YYYY-MM Dates-->
-                          <date-picker
-                              v-model:value="store.state.data.budgets[category_index].entries[entry_index].valid_from_to"
-                              type="month"
-                              format="MMMM YYYY"
-                              range="true"/>
                         </div>
                       </div>
                       <button v-if="!store.state.locked"
