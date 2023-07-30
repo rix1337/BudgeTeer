@@ -96,17 +96,10 @@ const current_month = ref(
       <div class="col-md-10 offset-md-1">
         <div class="card text-center shadow my-3">
           <div class="card-header">
-            <h1>
-              <i class="bi bi-cash-coin"/> BudgeTeer
-            </h1>
-            <p>Projekt von
-              <a href="https://github.com/rix1337/BudgeTeer/releases/latest" target="_blank">RiX</a> {{ version }}
-              <span v-if="update"> (Update verfügbar!)</span>
-            </p>
+              <h1><i class="bi-cash-coin"/> Verfügbar im {{ current_month }}: {{ current_budget }} €</h1>
           </div>
           <div class="card-body">
             <div class="row justify-content-center mt-2">
-              <h2>Restbudget {{ current_month }}: {{ current_budget }} €</h2>
               <div class="row justify-content-center mt-2">
                 <div v-for="(item, index) in store.state.data.balances" :key="item" class="balance">
                   <div class="input-group">

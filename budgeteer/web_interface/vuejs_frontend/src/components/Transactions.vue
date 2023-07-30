@@ -52,11 +52,11 @@ store.commit('getOpenTransactions')
                   </div>
                   <div class="input-group-append">
                     <button
-                        class="btn btn-outline-success"
+                        class="btn btn-outline-danger"
                         type="button"
-                        @click="store.state.data.open_transactions.splice(index, 1)"
+                        @click="store.state.data.open_transactions.splice(index, 1) && store.commit('setModifiedWhileLocked', true)"
                     >
-                      <i class="bi bi-check"/>
+                      <i class="bi bi-trash3"/>
                     </button>
                   </div>
                 </div>

@@ -72,11 +72,9 @@ function checkEntryInDisplayMonth(entry) {
         <div class="card text-center shadow my-3">
           <div class="card-header">
             <h1>
-              <i class="bi bi-currency-euro"/> Budgets {{ display_month }}
-            </h1>
-            <div class="col-md-auto p-1">
+              <i class="bi bi-receipt-cutoff"/> Budgets {{ display_month }}
               <button :disabled="display_month_index <= 0"
-                      class="btn btn-outline-primary"
+                      class="btn btn-outline-primary m-1"
                       type="button"
                       @click="updateDisplayMonth(-1)">
                 <i class="bi bi-arrow-left"/>
@@ -87,6 +85,9 @@ function checkEntryInDisplayMonth(entry) {
                       @click="updateDisplayMonth(1)">
                 <i class="bi bi-arrow-right"/>
               </button>
+            </h1>
+            <div class="col-md-auto p-1">
+
             </div>
           </div>
           <div class="card-body">
@@ -164,7 +165,7 @@ function checkEntryInDisplayMonth(entry) {
                                 v-if="displayMonthIsCurrentMonth() && store.state.locked && !store.state.data.budgets[category_index].entries[entry_index].booked"
                                 class="btn btn-outline-success"
                                 type="button"
-                                @click="store.state.data.budgets[category_index].entries[entry_index].booked = true">
+                                @click="store.state.data.budgets[category_index].entries[entry_index].booked = true; store.commit('setModifiedWhileLocked', true)">
                               <i class="bi bi-check"/>
                             </button>
                           </div>
@@ -178,7 +179,6 @@ function checkEntryInDisplayMonth(entry) {
                       </button>
                     </div>
                   </div>
-
                 </div>
               </div>
               <div class="row justify-content-center mt-2">

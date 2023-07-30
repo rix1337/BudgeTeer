@@ -26,6 +26,7 @@ function saveOnLock() {
   saveJSON('budgets')
   saveJSON('open_transactions')
   store.commit('setLocked', true)
+  store.commit('setModifiedWhileLocked', false)
 }
 </script>
 
@@ -34,7 +35,12 @@ function saveOnLock() {
 
   <div class="sticky-bottom float-end">
     <div class="col-md-auto p-1">
-      <button v-if="store.state.locked"
+      <button v-if="store.state.modified_while_locked"
+              class="btn btn-outline-warning bg-dark m-1"
+              type="button"
+              @click="saveOnLock()"><i class="bi bi-save"/>
+      </button>
+      <button v-else-if="store.state.locked"
               class="btn btn-outline-success bg-dark m-1"
               type="button"
               @click="store.commit('setLocked', false)"><i class="bi bi-unlock"/>
@@ -52,7 +58,7 @@ function saveOnLock() {
       </button>
 
       <button aria-controls="offcanvasBottomSettings"
-              class="btn btn-outline-primary bg-dark m-2"
+              class="btn btn-outline-primary bg-dark m-1"
               data-bs-target="#offcanvasBottomSettings"
               data-bs-toggle="offcanvas"
               type="button"
