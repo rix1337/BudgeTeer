@@ -7,7 +7,6 @@ const store = useStore()
 store.commit('getBalances')
 
 const current_budget = computed({
-  // getter
   get() {
     let transactions_total_amount = 0
     for (let i = 0; i < store.state.data.open_transactions.length; i++) {
@@ -40,8 +39,8 @@ const current_budget = computed({
 })
 
 function checkEntryInDisplayMonthAndNotBooked(entry) {
-  if (!entry.booked) {
-    let current_month = new Date()
+  if (entry.booked !== store.state.display_month) {
+    let today = new Date()
     let valid_from = new Date("1970-01-01")
     let valid_to = new Date("2100-01-01")
 
@@ -52,7 +51,7 @@ function checkEntryInDisplayMonthAndNotBooked(entry) {
       valid_to = new Date(entry.valid_from_to[1])
     }
 
-    return current_month >= valid_from && current_month <= valid_to
+    return today >= valid_from && today <= valid_to
   }
   return false
 }

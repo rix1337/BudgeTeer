@@ -9,8 +9,8 @@
 #### v.0.1.2
 - Fehlerbehebung bei Aktivierung von Basic Auth
 - Die Gültigkeit von künftigen Budgets wird bei deren Berechnung beachtet
+- Budgets können monatlich als gebucht markiert werden
 - ToDo
-  - Mark budgets booked per month (NOT GLOBALLY)
   - Add Yearly budget type (select month only for validity)
   - Add Weekly budget type
     - calculate weeks of month automatically

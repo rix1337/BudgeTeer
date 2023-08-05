@@ -27,23 +27,22 @@ function calculateCategoryTotal(i) {
 }
 
 function displayMonthIsCurrentMonth() {
-  let check_display_month = new Date(display_month.value)
+  let check_display_month = new Date(store.state.display_month)
   let check_current_month = new Date()
   return check_display_month.getMonth() === check_current_month.getMonth() && check_display_month.getFullYear() === check_current_month.getFullYear()
 }
 
-const display_month = ref(new Date().toISOString().slice(0, 7))
 const display_month_index = ref(0)
 
 function updateDisplayMonth(index) {
   display_month_index.value += index
   let indexed_date = new Date().setMonth(new Date().getMonth() + display_month_index.value)
-  display_month.value = new Date(indexed_date).toISOString().slice(0, 7)
+  store.commit('setDisplayMonth', new Date(indexed_date).toISOString().slice(0, 7))
 }
 
 function calculateEntry(entry) {
   if (displayMonthIsCurrentMonth()) {
-    return !entry.booked && checkEntryInDisplayMonth(entry)
+    return !checkEntryBookedThisMonth(entry) && checkEntryInDisplayMonth(entry)
   } else {
     return checkEntryInDisplayMonth(entry)
   }
@@ -51,14 +50,14 @@ function calculateEntry(entry) {
 
 function showEntry(entry) {
   if (store.state.locked && displayMonthIsCurrentMonth()) {
-    return !entry.booked && checkEntryInDisplayMonth(entry)
+    return !checkEntryBookedThisMonth(entry) && checkEntryInDisplayMonth(entry)
   } else {
-    return entry
+    return checkEntryInDisplayMonth(entry)
   }
 }
 
 function checkEntryInDisplayMonth(entry) {
-  let current_month = new Date(display_month.value)
+  let current_month = new Date(store.state.display_month)
   let valid_from = new Date("1970-01-01")
   let valid_to = new Date("2100-01-01")
 
@@ -71,6 +70,10 @@ function checkEntryInDisplayMonth(entry) {
 
   return current_month >= valid_from && current_month <= valid_to
 }
+
+function checkEntryBookedThisMonth(entry) {
+  return entry.booked === store.state.display_month
+}
 </script>
 
 <template>
@@ -80,7 +83,7 @@ function checkEntryInDisplayMonth(entry) {
         <div class="card text-center shadow my-3">
           <div class="card-header">
             <h1>
-              <i class="bi bi-receipt-cutoff"/> Budgets {{ display_month }}
+              <i class="bi bi-receipt-cutoff"/> Budgets {{ store.state.display_month }}
               <button :disabled="display_month_index <= 0"
                       class="btn btn-outline-primary m-1"
                       type="button"
@@ -149,10 +152,10 @@ function checkEntryInDisplayMonth(entry) {
                           </div>
                           <div v-if="!store.state.locked" class="input-group-append">
                             <button
-                                v-if="displayMonthIsCurrentMonth() && store.state.data.budgets[category_index].entries[entry_index].booked"
+                                v-if="displayMonthIsCurrentMonth() && checkEntryBookedThisMonth(store.state.data.budgets[category_index].entries[entry_index])"
                                 class="btn btn-outline-danger"
                                 type="button"
-                                @click="store.state.data.budgets[category_index].entries[entry_index].booked = false">
+                                @click="store.state.data.budgets[category_index].entries[entry_index].booked = ''">
                               <i class="bi bi-x"/>
                             </button>
                             <button
@@ -176,19 +179,34 @@ function checkEntryInDisplayMonth(entry) {
                             >
                               <i class="bi bi-trash3"/>
                             </button>
+                            <div v-if="!store.state.locked"
+                                 class="input-group-append">
+                              <select :disabled="store.state.locked"
+                                      v-model="store.state.data.budgets[category_index].entries[entry_index].type"
+                                      class="form-control">
+                                <option value="monthly">Monatlich</option>
+                                <option value="weekly">Wöchentlich</option>
+                                <option value="yearly">Jährlich</option>
+                                <option value="one-time">Einmalig</option>
+                              </select>
+                            </div>
+                            <!-- Todo show for all budget types except for one time budget-->
                             <DatePicker title="von"
                                         v-model="store.state.data.budgets[category_index].entries[entry_index].valid_from_to[0]">
                             </DatePicker>
                             <DatePicker title="bis"
                                         v-model="store.state.data.budgets[category_index].entries[entry_index].valid_from_to[1]">
                             </DatePicker>
+                            <!-- Todo add custom picker for yearly budget type-->
+                            <!-- Todo add custom picker for one time budget type-->
+                            <!-- Todo add custom picker for weekly budget type-->
                           </div>
                           <div class="input-group-append">
                             <button
-                                v-if="displayMonthIsCurrentMonth() && store.state.locked && !store.state.data.budgets[category_index].entries[entry_index].booked"
+                                v-if="displayMonthIsCurrentMonth() && store.state.locked && !checkEntryBookedThisMonth(store.state.data.budgets[category_index].entries[entry_index])"
                                 class="btn btn-outline-success"
                                 type="button"
-                                @click="store.commit('setModifiedWhileLocked', true); store.state.data.budgets[category_index].entries[entry_index].booked = true">
+                                @click="store.commit('setModifiedWhileLocked', true); store.state.data.budgets[category_index].entries[entry_index].booked = store.state.display_month">
                               <i class="bi bi-check"/>
                             </button>
                           </div>
@@ -197,7 +215,7 @@ function checkEntryInDisplayMonth(entry) {
                       <button v-if="!store.state.locked"
                               class="btn btn-outline-primary"
                               type="button"
-                              @click="store.state.data.budgets[category_index].entries.push({label:'',amount:'', valid_from_to: [null, null], booked: false})"
+                              @click="store.state.data.budgets[category_index].entries.push({label:'',amount:'', valid_from_to: [null, null], booked: ''})"
                       > Eintrag hinzufügen
                       </button>
                     </div>

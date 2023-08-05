@@ -22,6 +22,7 @@ const store = createStore({
                 open_transactions: [],
                 budgets: []
             },
+            display_month: new Date().toISOString().slice(0, 7),
             locked: true,
             modified_while_locked: false,
             settings: {},
@@ -31,6 +32,9 @@ const store = createStore({
             }
         }
     }, mutations: {
+        setDisplayMonth(state, month) {
+            state.display_month = month
+        },
         getSettings(state) {
             axios.get('api/settings/')
                 .then(function (res) {
