@@ -167,15 +167,8 @@ def app_container():
         i = str(i).strip().replace("None", "")
         return int(i) if i else ""
 
-    def to_float(i):
-        i = str(i).strip().replace("None", "")
-        return float(i) if i else ""
-
     def to_str(i):
         return '' if i is None else str(i)
-
-    def to_bool(i):
-        return True if i == "True" else False
 
     @app.get(prefix + "/api/settings/")
     @auth_basic(is_authenticated_user)

@@ -4,7 +4,20 @@
 
 ---
 
+### Bekannte Fehler:
+- Budgettyp (monatlich, jährlich, wöchentlich) wird nicht beachtet
+- Budget-Einträge vom Typ "wöchentlich" können nicht pro Woche als gebucht markiert werden
+- Budget-Einträge vom Typ "jährlich" können nicht pro Jahr als gebucht markiert werden
+- Budget-Einträge vom Typ "einmalig" können nicht dauerhaft als gebucht markiert werden
+- Zukünftige Restbudgets sind nicht im Kopfbereich aufrufbar
+
+
 ### Changelog BudgeTeer:
+
+#### v.0.1.2
+- Fehlerbehebung bei Aktivierung von Basic Auth
+- Die Gültigkeit von künftigen Budgets wird beim Anzeigen und Berechnen dieser beachtet
+- Budgets können monatlich als gebucht markiert werden
 
 #### v.0.1.1
 - Fehlerkorrektur beim Hinzufügen neuer Konten, Transaktionen und Budgets
