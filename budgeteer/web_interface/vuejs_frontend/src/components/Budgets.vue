@@ -52,7 +52,7 @@ function showEntry(entry) {
   if (store.state.locked && displayMonthIsCurrentMonth()) {
     return !checkEntryBookedThisMonth(entry) && checkEntryInDisplayMonth(entry)
   } else {
-    return checkEntryInDisplayMonth(entry)
+    return checkEntryInDisplayMonth(entry) // this is wrong if we are unlocked, as we then want to show all entries
   }
 }
 
@@ -72,6 +72,8 @@ function checkEntryInDisplayMonth(entry) {
 }
 
 function checkEntryBookedThisMonth(entry) {
+  // todo check entry type (weekly, monthly, yearly, one-time) here
+  // the following check only applies to monthly entries
   return entry.booked === store.state.display_month
 }
 </script>

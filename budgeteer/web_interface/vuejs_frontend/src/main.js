@@ -73,8 +73,13 @@ const store = createStore({
             state.misc.docker = docker
         }, setLocked(state, locked) {
             state.locked = locked
-        }, setModifiedWhileLocked(state, locked) {
-            state.modified_while_locked = locked
+        }, setModifiedWhileLocked(state, modified) {
+            if (modified) {
+                document.title = "BudgeTeer (ungespeichert!)"
+            } else {
+                document.title = "BudgeTeer"
+            }
+            state.modified_while_locked = modified
         }
     }
 })
