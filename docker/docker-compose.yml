@@ -1,0 +1,12 @@
+version: '3.3'
+services:
+    docker-budgeteer:
+        container_name: 'BudgeTeer'
+        ports:
+            - port:2808
+        volumes:
+            - '/path/to/config/:/config:rw'
+        logging:
+            options:
+                max-size: 50m
+        image: 'rix1337/docker-budgeteer:latest'

@@ -9,7 +9,7 @@ from urllib.request import urlopen
 
 
 def get_version():
-    return "0.1.3"
+    return "0.1.4"
 
 
 def create_version_file():
