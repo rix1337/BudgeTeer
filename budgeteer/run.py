@@ -20,7 +20,7 @@ from budgeteer.web_interface.web_server import web_server
 version = "v." + version.get_version()
 
 
-def start_budgeteer():
+def main():
     with multiprocessing.Manager() as manager:
         shared_state_dict = manager.dict()
         shared_state_lock = manager.Lock()
@@ -104,4 +104,4 @@ def start_budgeteer():
 
 
 if __name__ == "__main__":
-    start_budgeteer()
+    main()

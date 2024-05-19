@@ -5,8 +5,8 @@
 
 import multiprocessing
 
-from budgeteer import budget
+from budgeteer import run
 
 if __name__ == '__main__':
     multiprocessing.freeze_support()
-    budget.start_budgeteer()
+    run.main()

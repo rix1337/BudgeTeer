@@ -53,6 +53,15 @@ Benötigt [Node.js](https://nodejs.org/en/download/), [npm](https://docs.npmjs.c
 
 ### [Docker Image](https://hub.docker.com/r/rix1337/docker-budgeteer/)
 
+```
+docker run -d \
+  --name="BudgeTeer" \
+  -p port:2808 \
+  -v /path/to/config/:/config:rw \
+  --log-opt max-size=50m \
+  rix1337/docker-budgeteer
+  ```
+
 * Der Betrieb als Docker-Container empfiehlt sich als Standardinstallation - vor allem für NAS-Systeme, Homeserver und
   sonstige Geräte die dauerhaft und möglichst wartungsfrei (headless) betrieben werden sollen.
 * Bei jedem Release wird ein getaggtes Image erstellt. Damit kann man auf der Wunschversion verbleiben oder im Falle
@@ -60,6 +69,12 @@ Benötigt [Node.js](https://nodejs.org/en/download/), [npm](https://docs.npmjs.c
 * Um immer auf dem aktuellen Stand zu sein, einfach das mit `latest` getaggte Image nutzen.
 * Für UNRAID-Server kann das Image direkt über die Community Applications bezogen und der Container so eingerichtet
   werden.
+
+Das Image `rix1377/docker-budgeteer` wird standardmäßig auf das `:latest`-Tag aufgelöst. Dieses wird mit jedem Release auf die neue Version aktualisiert. Mit jedem Release wird ebenfalls eine getaggte Version des Images erzeugt. Auf letztere kann man wechseln, um beispielsweise bei Fehlern in der neuen Version auf einen funktionierenden Stand zurück zu kehren.
+
+Beispiel:
+
+`docker pull rix1337/docker-budgeteer:0.0.2`
 
 ### Windows Build
 

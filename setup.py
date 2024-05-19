@@ -38,7 +38,7 @@ setuptools.setup(
     ],
     entry_points={
         'console_scripts': [
-            'budgeteer = budgeteer.budget:start_budgeteer',
+            'budgeteer = budgeteer.run:main',
         ],
     },
 )
